@@ -1,7 +1,7 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Question from "./pages/Question";
-import Result from "./pages/Result";
+import Home from "./pages/Home.jsx";
+import Question from "./pages/Question.jsx";
+import Result from "./pages/Result.jsx";
 
 export default function App() {
   return (

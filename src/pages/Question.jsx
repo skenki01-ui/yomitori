@@ -1,104 +1,97 @@
-import { useEffect, useState } from "react";
-import { emotionQuestion, getRandomQuestions } from "./data/questions";
+import { useState } from "react";
+
+const questions = [
+  {
+    text: "人に否定されたら？",
+    options: [
+      { text: "言い返す", type: "red" },
+      { text: "気にしない", type: "blue" },
+      { text: "引きずる", type: "purple" }
+    ]
+  },
+  {
+    text: "予定が空いたら？",
+    options: [
+      { text: "誰か誘う", type: "pink" },
+      { text: "1人で過ごす", type: "green" },
+      { text: "何もしない", type: "gray" }
+    ]
+  },
+  {
+    text: "疲れてる時は？",
+    options: [
+      { text: "閉じこもる", type: "black" },
+      { text: "無理して動く", type: "red" },
+      { text: "ぼーっとする", type: "white" }
+    ]
+  }
+];
 
 export default function Question() {
-  const [step, setStep] = useState(0);
-  const [emotion, setEmotion] = useState(null);
-  const [list, setList] = useState([]);
-  const [score, setScore] = useState({});
-  const [fade, setFade] = useState(true);
+  const [index, setIndex] = useState(0);
+  const [scores, setScores] = useState({});
 
-  useEffect(() => {
-    setList(getRandomQuestions());
-  }, []);
+  const q = questions[index];
 
-  function nextStep() {
-    setFade(false);
-    setTimeout(() => {
-      setStep(prev => prev + 1);
-      setFade(true);
-    }, 300);
-  }
+  function answer(type) {
+    const newScores = {
+      ...scores,
+      [type]: (scores[type] || 0) + 1
+    };
 
-  function handleEmotion(val) {
-    setEmotion(val);
-    nextStep();
-  }
+    if (index + 1 >= questions.length) {
+      let main = Object.keys(newScores).sort(
+        (a, b) => newScores[b] - newScores[a]
+      )[0];
 
-  function handleAnswer(type) {
-    setScore(prev => ({
-      ...prev,
-      [type]: (prev[type] || 0) + 1
-    }));
+      // レア虹
+      if (Math.random() < 0.05) {
+        main = "rainbow";
+      }
 
-    if (step >= list.length) {
-      const result = Object.entries(score)
-        .sort((a, b) => b[1] - a[1])[0]?.[0];
-
-      localStorage.setItem("auraColor", result);
-      localStorage.setItem("emotion", emotion);
-
+      localStorage.setItem("aura", main);
       window.location.hash = "/result";
       return;
     }
 
-    nextStep();
+    setScores(newScores);
+    setIndex(index + 1);
   }
-
-  const q = step === 0 ? emotionQuestion : list[step - 1];
 
   return (
     <div style={{
       height: "100vh",
       background: "#000",
+      color: "#fff",
       display: "flex",
       justifyContent: "center",
       alignItems: "center"
     }}>
       <div style={{
         width: 280,
-        padding: 24,
-        borderRadius: 20,
-        background: "rgba(255,255,255,0.05)",
-        backdropFilter: "blur(10px)",
-        color: "#fff",
-        textAlign: "center",
-        opacity: fade ? 1 : 0,
-        transition: "0.3s"
+        padding: 20,
+        background: "#111",
+        borderRadius: 16,
+        textAlign: "center"
       }}>
-        <h3 style={{ marginBottom: 20 }}>{q.text}</h3>
+        <h3>{q.text}</h3>
 
         {q.options.map(o => (
           <button
             key={o.text}
-            onClick={() =>
-              step === 0 ? handleEmotion(o.value) : handleAnswer(o.type)
-            }
+            onClick={() => answer(o.type)}
             style={{
               display: "block",
               width: "100%",
-              marginBottom: 10,
-              padding: "10px",
-              borderRadius: 10,
-              border: "none",
-              background: "rgba(255,255,255,0.1)",
-              color: "#fff",
-              cursor: "pointer"
+              marginTop: 10,
+              padding: 10,
+              borderRadius: 8,
+              border: "none"
             }}
           >
             {o.text}
           </button>
         ))}
-
-        <div style={{
-          marginTop: 20,
-          width: 10,
-          height: 10,
-          borderRadius: "50%",
-          background: "#fff",
-          marginInline: "auto",
-          opacity: 0.5
-        }} />
       </div>
     </div>
   );
