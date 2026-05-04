@@ -32,27 +32,46 @@ export default function Result() {
           <p key={i}>{l}</p>
         ))}
 
+        {/* 不安→誘導 */}
         <p style={{ marginTop: 20 }}>
           このままだと少しずつズレていく可能性があります
         </p>
 
+        <p style={{ fontSize: 12 }}>
+          でも原因ははっきりしています
+        </p>
+
+        {/* ひそひそ誘導 */}
         <button
           onClick={() =>
-            (window.location.href = "https://hisohisoのURL")
+            (window.location.href = "https://hisohiso.vercel.app")
           }
           style={{
             marginTop: 20,
-            padding: 10,
+            padding: 12,
             borderRadius: 8,
+            border: "none",
+            background: "#fff",
+            color: "#000",
+            fontWeight: "bold",
+            cursor: "pointer",
           }}
         >
           この状態について相談する
         </button>
 
-        {/* シェア誘導 */}
+        {/* 拡散導線（強化版） */}
         <div style={{ marginTop: 30 }}>
           <p style={{ fontSize: 12 }}>
-            この結果、誰かに見せてみて
+            これ、結構当たってるんだけど
+          </p>
+
+          <p style={{ fontSize: 12 }}>
+            これ当たってるか見てほしい
+          </p>
+
+          <p style={{ fontSize: 12 }}>
+            同じタイプの人いる？
           </p>
 
           <p
