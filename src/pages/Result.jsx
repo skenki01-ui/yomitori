@@ -1,4 +1,4 @@
-import { getResult } from "./data/aura";
+import { getResult } from "./data/aura.js";
 
 export default function Result() {
   const type = localStorage.getItem("aura");
