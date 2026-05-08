@@ -1,90 +1,110 @@
-import { getResult } from "../data/aura.js";
+import { getResult } from "../pages/data/aura.js";
 
 export default function Result() {
   const type = localStorage.getItem("aura");
   const result = getResult(type);
 
+  const auraColors = {
+    red: "#ff3b3b",
+    blue: "#3b82ff",
+    green: "#22c55e",
+    yellow: "#facc15",
+    purple: "#a855f7",
+    pink: "#ff4fd8",
+    white: "#dddddd",
+    black: "#222222",
+  };
+
+  const mainColor = auraColors[type] || "#444";
+
   return (
     <div
       style={{
-        height: "100vh",
-        background: "#000",
+        minHeight: "100vh",
+        background: `radial-gradient(circle at center, ${mainColor} 0%, #000 75%)`,
         color: "#fff",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        padding: 20,
       }}
     >
       <div
         style={{
-          width: 300,
-          padding: 20,
-          background: "#111",
-          borderRadius: 16,
+          width: 320,
+          padding: 24,
+          borderRadius: 24,
+          background: "rgba(0,0,0,0.5)",
+          backdropFilter: "blur(10px)",
           textAlign: "center",
+          boxShadow: `0 0 40px ${mainColor}`,
         }}
       >
-        <h2>あなたの現在のオーラ</h2>
-
-        <h3>{result.title}</h3>
-
-        {result.lines.map((l, i) => (
-          <p key={i}>{l}</p>
-        ))}
-
-        {/* 不安→誘導 */}
-        <p style={{ marginTop: 20 }}>
-          このままだと少しずつズレていく可能性があります
-        </p>
-
-        <p style={{ fontSize: 12 }}>
-          でも原因ははっきりしています
-        </p>
-
-        {/* ひそひそ誘導 */}
-        <button
-          onClick={() =>
-            (window.location.href = "https://hisohiso.vercel.app")
-          }
+        <div
           style={{
-            marginTop: 20,
-            padding: 12,
-            borderRadius: 8,
+            fontSize: 32,
+            marginBottom: 10,
+          }}
+        >
+          🔮
+        </div>
+
+        <div
+          style={{
+            fontSize: 28,
+            fontWeight: "bold",
+            marginBottom: 16,
+          }}
+        >
+          {result.title}
+        </div>
+
+        <div
+          style={{
+            fontSize: 15,
+            lineHeight: 1.8,
+            marginBottom: 24,
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {result.text}
+        </div>
+
+        <a
+          href="https://hisohiso.vercel.app"
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            display: "block",
+            marginBottom: 16,
+            color: "#7dd3fc",
+            textDecoration: "underline",
+            wordBreak: "break-all",
+          }}
+        >
+          https://hisohiso.vercel.app
+        </a>
+
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(
+              "https://hisohiso.vercel.app"
+            );
+            alert("URLコピーしたよ");
+          }}
+          style={{
+            width: "100%",
+            padding: 14,
             border: "none",
-            background: "#fff",
-            color: "#000",
+            borderRadius: 14,
+            background: mainColor,
+            color: "#fff",
             fontWeight: "bold",
             cursor: "pointer",
           }}
         >
-          この状態について相談する
+          URLをコピー
         </button>
-
-        {/* 拡散導線（強化版） */}
-        <div style={{ marginTop: 30 }}>
-          <p style={{ fontSize: 12 }}>
-            これ、結構当たってるんだけど
-          </p>
-
-          <p style={{ fontSize: 12 }}>
-            これ当たってるか見てほしい
-          </p>
-
-          <p style={{ fontSize: 12 }}>
-            同じタイプの人いる？
-          </p>
-
-          <p
-            style={{
-              fontSize: 12,
-              marginTop: 5,
-              wordBreak: "break-all",
-              color: "#aaa",
-            }}
-          >
-            https://yomitori.vercel.app
-          </p>
-        </div>
       </div>
     </div>
   );
