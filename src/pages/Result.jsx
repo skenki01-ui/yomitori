@@ -73,6 +73,24 @@ export default function Result() {
           {result.lines?.join("\n")}
         </div>
 
+        <div
+          style={{
+            fontSize: 14,
+            lineHeight: 1.8,
+            marginBottom: 18,
+            opacity: 0.9,
+          }}
+        >
+          もっと深く話したい人へ
+          <br />
+          <br />
+          AIチャット「ひそひそ」で
+          <br />
+          あなたのオーラや気持ちを
+          <br />
+          ゆっくり話せます
+        </div>
+
         <a
           href="https://hisohiso.vercel.app"
           target="_blank"
