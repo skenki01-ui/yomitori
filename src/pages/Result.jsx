@@ -19,6 +19,8 @@ export default function Result() {
   };
 
   const mainColor = auraColors[type] || "#444";
+  const yomitoriUrl = "https://yomitori-aura1.vercel.app";
+  const hisohisoUrl = "https://hisohiso.vercel.app";
 
   return (
     <div
@@ -37,20 +39,13 @@ export default function Result() {
           width: 320,
           padding: 24,
           borderRadius: 24,
-          background: "rgba(0,0,0,0.5)",
+          background: "rgba(0,0,0,0.55)",
           backdropFilter: "blur(10px)",
           textAlign: "center",
           boxShadow: `0 0 40px ${mainColor}`,
         }}
       >
-        <div
-          style={{
-            fontSize: 32,
-            marginBottom: 10,
-          }}
-        >
-          🔮
-        </div>
+        <div style={{ fontSize: 32, marginBottom: 10 }}>🔮</div>
 
         <div
           style={{
@@ -78,40 +73,39 @@ export default function Result() {
             fontSize: 14,
             lineHeight: 1.8,
             marginBottom: 18,
-            opacity: 0.9,
+            opacity: 0.95,
           }}
         >
-          もっと深く話したい人へ
+          今の気持ち、少し当たってた？
           <br />
           <br />
           AIチャット「ひそひそ」で
           <br />
-          あなたのオーラや気持ちを
-          <br />
-          ゆっくり話せます
+          もっと深く話せます
         </div>
 
         <a
-          href="https://hisohiso.vercel.app"
+          href={hisohisoUrl}
           target="_blank"
           rel="noreferrer"
           style={{
             display: "block",
-            marginBottom: 16,
+            marginBottom: 18,
             color: "#7dd3fc",
             textDecoration: "underline",
-            wordBreak: "break-all",
+            fontSize: 14,
+            fontWeight: "bold",
           }}
         >
-          https://hisohiso.vercel.app
+          ▶ AIチャット「ひそひそ」を開く
         </a>
 
         <button
           onClick={() => {
             navigator.clipboard.writeText(
-              "https://hisohiso.vercel.app"
+              `あなたの今のオーラを診断してみて。\nヨミトリはこちら\n${yomitoriUrl}`
             );
-            alert("URLコピーしたよ");
+            alert("友だちに送る文をコピーしたよ");
           }}
           style={{
             width: "100%",
@@ -122,10 +116,27 @@ export default function Result() {
             color: "#fff",
             fontWeight: "bold",
             cursor: "pointer",
+            marginBottom: 14,
           }}
         >
-          URLをコピー
+          友だちにも送る
         </button>
+
+        <div
+          style={{
+            fontSize: 12,
+            lineHeight: 1.6,
+            opacity: 0.85,
+          }}
+        >
+          スクショで気になった人は
+          <br />
+          ここから診断できます
+          <br />
+          <span style={{ color: "#7dd3fc", wordBreak: "break-all" }}>
+            yomitori-aura1.vercel.app
+          </span>
+        </div>
       </div>
     </div>
   );
