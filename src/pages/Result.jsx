@@ -13,6 +13,9 @@ export default function Result() {
     pink: "#ff4fd8",
     white: "#dddddd",
     black: "#222222",
+    gold: "#f5c542",
+    gray: "#777777",
+    rainbow: "#ff66cc",
   };
 
   const mainColor = auraColors[type] || "#444";
@@ -67,7 +70,7 @@ export default function Result() {
             whiteSpace: "pre-wrap",
           }}
         >
-          {result.text}
+          {result.lines?.join("\n")}
         </div>
 
         <a
