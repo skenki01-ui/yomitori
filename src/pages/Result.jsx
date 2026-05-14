@@ -1,6 +1,7 @@
 import { getResult } from "../data/aura.js";
 
 export default function Result() {
+
   const type = localStorage.getItem("aura");
   const result = getResult(type);
 
@@ -9,7 +10,7 @@ export default function Result() {
     blue: "#3b82ff",
     green: "#22c55e",
     yellow: "#facc15",
-    purple: "#a855f7",
+    purple: "#0b0114",
     pink: "#ff4fd8",
     white: "#dddddd",
     black: "#222222",
@@ -19,8 +20,17 @@ export default function Result() {
   };
 
   const mainColor = auraColors[type] || "#444";
+
   const yomitoriUrl = "https://yomitori-aura1.vercel.app";
-  const hisohisoUrl = "https://hisohiso.vercel.app";
+
+  // 🔥 診断内容を渡す
+  const introText = `${result.title}\n${result.lines?.join(" ")}`;
+
+  const hisohisoUrl =
+    `https://hisohiso.vercel.app/chat/free?` +
+    `genre=相談&` +
+    `mode=ヨミトリ&` +
+    `intro=${encodeURIComponent(introText)}`;
 
   return (
     <div
@@ -45,7 +55,9 @@ export default function Result() {
           boxShadow: `0 0 40px ${mainColor}`,
         }}
       >
-        <div style={{ fontSize: 32, marginBottom: 10 }}>🔮</div>
+        <div style={{ fontSize: 32, marginBottom: 10 }}>
+          🔮
+        </div>
 
         <div
           style={{
@@ -102,10 +114,13 @@ export default function Result() {
 
         <button
           onClick={() => {
+
             navigator.clipboard.writeText(
               `あなたの今のオーラを診断してみて。\nヨミトリはこちら\n${yomitoriUrl}`
             );
+
             alert("友だちに送る文をコピーしたよ");
+
           }}
           style={{
             width: "100%",
@@ -133,7 +148,12 @@ export default function Result() {
           <br />
           ここから診断できます
           <br />
-          <span style={{ color: "#7dd3fc", wordBreak: "break-all" }}>
+          <span
+            style={{
+              color: "#7dd3fc",
+              wordBreak: "break-all",
+            }}
+          >
             yomitori-aura1.vercel.app
           </span>
         </div>
